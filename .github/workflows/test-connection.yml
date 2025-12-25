@@ -1,0 +1,33 @@
+name: ✅ Verify GitHub-VPS Connection
+on: [workflow_dispatch]  # Manual trigger
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test SSH Connection
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            echo "🎉 CONNECTION SUCCESSFUL!"
+            echo "=================================="
+            echo "✅ GitHub CAN connect to your VPS"
+            echo "=================================="
+            echo ""
+            echo "Connection Details:"
+            echo "• Server: $(hostname)"
+            echo "• IP: $(hostname -I | awk '{print $1}')"
+            echo "• User: $(whoami)"
+            echo "• Time: $(date)"
+            echo "• Directory: $(pwd)"
+            echo ""
+            echo "Creating verification file..."
+            echo "Verified at: $(date)" > /tmp/github_verified.txt
+            echo "GitHub SHA: ${{ github.sha }}" >> /tmp/github_verified.txt
+            echo "Repository: ${{ github.repository }}" >> /tmp/github_verified.txt
+            echo ""
+            echo "Verification file created at /tmp/github_verified.txt"
+            cat /tmp/github_verified.txt

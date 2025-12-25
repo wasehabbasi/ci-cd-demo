@@ -21,7 +21,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           cd ${{ secrets.SERVER_PATH }}/backend
-          git pull origin main
+          sudo git pull origin main
           npm install
           pm2 restart demo-api || pm2 start server.js --name demo-api
 

@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>Add Users</h2>
+      <h2>Updated Users</h2>
 
       <input placeholder="Name" value={name}
         onChange={e => setName(e.target.value)} />
